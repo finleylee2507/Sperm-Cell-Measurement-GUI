@@ -22,7 +22,7 @@ function varargout = imagegui(varargin)
 
 % Edit the above text to modify the response to help imagegui
 
-% Last Modified by GUIDE v2.5 08-Dec-2020 17:44:07
+% Last Modified by GUIDE v2.5 08-Dec-2020 23:45:50
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -302,3 +302,32 @@ function finalLength_CreateFcn(hObject, eventdata, handles)
 % hObject    handle to finalLength (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    empty - handles not created until after all CreateFcns called
+
+
+% --- Executes on button press in eraser.
+function eraser_Callback(hObject, eventdata, handles)
+% hObject    handle to eraser (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+temp=handles.b;
+% figure;
+axes(handles.axes2);
+imshow(temp);
+while true 
+    H=imrect(gca);
+    pos=wait(H);
+    % close all
+    temp(pos(1,2):pos(1,2)+pos(1,4),pos(1,1):pos(1,1)+pos(1,3))=0;
+    imshow(temp);
+    loop = inputdlg('Continue? (1/0) : '); % 1 to continue 0 to break loop
+    user_val = str2num(loop{1});
+   
+    if user_val ==0
+        break
+    else 
+        continue 
+    end 
+end 
+
+ handles.b=temp;
+guidata(hObject,handles);
