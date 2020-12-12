@@ -140,9 +140,6 @@ function pushbutton1_Callback(hObject, eventdata, handles)
        handles.newcolumns=newcolumns;
        axes(handles.axes2);
        imshow(a);
-       
-       %store other relevant information
-       handles.erasermsgcount=0;
     end
 %clean up text field 
 %clean up text fields
@@ -233,7 +230,6 @@ a=handles.a;
 b=handles.b;
 imwrite(b,"temp.png",'png');
 temp=background_subtraction('temp.png',1,false,false,false);
-waitfor(msgbox('Operation Completed','Success'));
 axes(handles.axes2);
 imshow(temp);
 handles.b=temp;
@@ -253,10 +249,10 @@ k=str2num(k);%convert to a number
 tempLargest=getLargestComponents(b,k,1);
 disp(tempLargest);
 size(tempLargest)
-axes(handles.axes2);
-grayoverlay(a,tempLargest);
-handles.preview=tempLargest;
-guidata(hObject, handles);
+% axes(handles.axes2);
+% grayoverlay(a,tempLargest);
+% handles.preview=tempLargest;
+% guidata(hObject, handles);
 
 
 % --- Executes on button press in confirm.
@@ -265,7 +261,6 @@ function confirm_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 handles.c=handles.b;
-waitfor(msgbox('Changes saved. You can now move on to image thresholding','Success'));
 guidata(hObject, handles);
 
 
@@ -338,12 +333,6 @@ function eraser_Callback(hObject, eventdata, handles)
 % hObject    handle to eraser (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-if(handles.erasermsgcount==0)
-    waitfor(msgbox('Use the draggable rectangle to blacken out part of the image.Once finished,double click to move on')); 
-    handles.erasermsgcount=handles.erasermsgcount+1;
-end 
-    
-
 temp=handles.b;
 % figure;
 axes(handles.axes2);
@@ -360,7 +349,7 @@ while true
     width=handles.newcolumns;
     
     if(pos(1,2)<0||pos(1,2)>height||pos(1,2)+pos(1,4)>height||pos(1,2)+pos(1,4)<0||pos(1,1)<0||pos(1,1)>width||pos(1,1)+pos(1,3)>width||pos(1,1)+pos(1,3)<0)
-     msgbox('Out of bound error, please press the eraser button again to restart','Error','error');
+     msgbox('Out of bound error, please restart the eraser');
         break
     end
     
