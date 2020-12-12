@@ -117,7 +117,9 @@ format compact
 % largest_bones=getLargestComponents(thre_smallbone,1,0);
 % imshow(largest_bones);
 
-largebone=imread("bone_large.png");
+largebone=imread("test.jpg");
+largebone=rgb2gray(largebone);
+size(largebone)
 % largebone=rgb2gray(largebone);
 % imshow(largebone)
 % thre_largebone=largebone>=100;

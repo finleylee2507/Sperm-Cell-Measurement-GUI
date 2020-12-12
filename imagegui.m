@@ -113,24 +113,38 @@ function pushbutton1_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
  %This code checks if the user pressed cancel on the dialog.
  
-    [filename, pathname] = uigetfile('*.png', 'Pick an Image file');
+    [filename, pathname] = uigetfile('*.jpg', 'Pick an Image file');
     if isequal(filename,0) || isequal(pathname,0)
        disp('User pressed cancel')
     else
        disp(['User selected ', fullfile(pathname, filename)])
        a=imread(fullfile(pathname, filename));
-    
+       
        axes(handles.axes1);
+        a=rgb2gray(a);
+        [rows,columns]=size(a);
+        
        a=imresize(a,0.15);
-       a=rgb2gray(a);
+      [newrows,newcolumns]=size(a);
        imshow(a);
        handles.a=a;%copy used to display the original image 
        handles.b=a;%copy used for temporary changes
        handles.c=a;%copy used for saving changes 
+       %save the dimensions of the image 
+       disp(rows);
+       disp(newrows);
+       handles.rows=rows;
+       handles.columns=columns;
+       handles.newrows=newrows;
+       handles.newcolumns=newcolumns;
        axes(handles.axes2);
        imshow(a);
     end
+%clean up text field 
+%clean up text fields
+set(handles.finalLength,'String','');
 % Update handles structure
+
 guidata(hObject, handles);
 
 
@@ -199,6 +213,10 @@ handles.c=handles.a;
 handles.b=handles.a;
 axes(handles.axes2);
 imshow(handles.c);
+
+%clean up text fields
+set(handles.finalLength,'String','');
+
 guidata(hObject, handles);
 
 
@@ -227,7 +245,7 @@ a=handles.a;
 b=handles.b;
 k=get(handles.component_number,'String');%get the k value from the text box
 k=str2num(k);%convert to a number
-tempLargest=getLargestComponents(b,k,0);
+tempLargest=getLargestComponents(b,k,1);
 disp(tempLargest);
 axes(handles.axes2);
 grayoverlay(a,tempLargest);
@@ -286,14 +304,18 @@ function reportLength_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
+message1="Calculating cell length...";
+set(handles.finalLength,'String',message1);
+drawnow;%display text immediately 
 cellbody=handles.preview; %retrieve the binary image of the cell body 
 cell_cc=buildCC2D(cellbody);%build the cell complex for thinning 
-thin_result=thin2D(cell_cc,6,0.6); %perform 2D thinning on the cell complex with the specified parameters. 
-cell_length=(size(thin_result{1},2)*(2048/308))/3.06; %NOTE: NEED TO COME BACK AND FIX ratio 
+thin_result=thin2D(cell_cc,20,0.8); %perform 2D thinning on the cell complex with the specified parameters. 
+cell_length=(size(thin_result{1},2)*(handles.rows/handles.newrows))/3.06; %NOTE: NEED TO COME BACK AND FIX ratio 
 disp(cell_length);
 final_length=num2str(cell_length);
-message=strcat("The length of the sperm cell is: ",final_length, " mm");
-set(handles.finalLength,'String',message);
+plotCC2(thin_result);
+message2=strcat("The length of the sperm cell is: ",final_length, " mm");
+set(handles.finalLength,'String',message2);
 guidata(hObject,handles);
 
 

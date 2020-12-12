@@ -11,6 +11,7 @@ Procedures:
 
 GUI improvement:
 -Need a progress bar
+-display the original high resolution image on the left
 -need to clean up text box after each run.
 -after we confirm changes, axes1 should display the new image
 
@@ -34,5 +35,9 @@ plotCC2(testcc);
 thin_test=thin2D(testcc,6,0.6);
 plotCC2(thin_test);
 
+
+Possible sources of errors:
+- If we choose the wrong relative and absolute threshold.
+- Inconsistent thinning result. 
 
 
