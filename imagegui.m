@@ -218,9 +218,13 @@ handles.b=handles.a;
 axes(handles.axes2);
 imshow(handles.c);
 
+
 %clean up text fields
 set(handles.finalLength,'String','');
+set(handles.thresholding,'value',0);
+set(handles.threshold_value,'String','0');
 
+set(handles.component_number,'String',num2str(1));
 guidata(hObject, handles);
 
 
@@ -250,7 +254,7 @@ a=handles.a;
 b=handles.b;
 k=get(handles.component_number,'String');%get the k value from the text box
 k=str2num(k);%convert to a number
-tempLargest=getLargestComponents(b,k,1);
+tempLargest=getLargestComponents(b,k,0);
 disp(tempLargest);
 size(tempLargest)
 axes(handles.axes2);

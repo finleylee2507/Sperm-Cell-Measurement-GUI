@@ -11,9 +11,10 @@ Procedures:
 
 GUI improvement:
 -Need a progress bar
--display the original high resolution image on the left
 -need to clean up text box after each run.
 -after we confirm changes, axes1 should display the new image
+-In thresholding, check whether the image is preprocessed and display warning accordingly. 
+-Add a how to use button
 
 
 
@@ -21,7 +22,7 @@ Algorithm imporvement:
 
 -In threshold, need to check if img is rgb or gray
 -In gray overlay, need to check if img is rgb or gray
--
+-Error handling. 
 
 
 For 28369.2.6_2: 
