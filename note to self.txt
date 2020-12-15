@@ -6,6 +6,7 @@ Procedures:
 -If the image is super noisy and bright, use background subtraction.
 -If the image is very dark and it's hard to spot the cell, use brighten image. If brightening the image introduces noise, apply 
 -If there're noises that couldn't be cleaned using the provided buttons, use the blacken button (needs bug fixes). 
+-On the offchance that the cell body becomes segmented, the user also has the option to adjust the number of largest components they want. 
 
 
 

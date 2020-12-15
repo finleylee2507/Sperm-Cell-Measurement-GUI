@@ -179,18 +179,18 @@ if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgr
 end
 
 
-% --- Executes on button press in savebutton.
-function savebutton_Callback(hObject, eventdata, handles)
-% hObject    handle to savebutton (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-[filename, foldername] = uiputfile('Where do you want the file saved?');
-complete_name = fullfile(foldername, filename);
-c=handles.c;
-imwrite(c, complete_name);
-% Update handles structure
-guidata(hObject, handles);
+% % --- Executes on button press in savebutton.
+% function savebutton_Callback(hObject, eventdata, handles)
+% % hObject    handle to savebutton (see GCBO)
+% % eventdata  reserved - to be defined in a future version of MATLAB
+% % handles    structure with handles and user data (see GUIDATA)
+% 
+% [filename, foldername] = uiputfile('Where do you want the file saved?');
+% complete_name = fullfile(foldername, filename);
+% c=handles.c;
+% imwrite(c, complete_name);
+% % Update handles structure
+% guidata(hObject, handles);
 
 
 % --- Executes on button press in brighten_image.
