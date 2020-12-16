@@ -16,6 +16,7 @@ end
 
 while (counter>numcomp-numreq)
     maximum=max(helperresult,[],"all");
+    disp(maximum)
     label=find(helperresult==maximum);
     [xs,ys]=find(result==label);
     for i=1:length(xs)

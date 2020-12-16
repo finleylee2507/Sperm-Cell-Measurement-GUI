@@ -22,7 +22,7 @@ function varargout = imagegui(varargin)
 
 % Edit the above text to modify the response to help imagegui
 
-% Last Modified by GUIDE v2.5 16-Dec-2020 14:15:00
+% Last Modified by GUIDE v2.5 16-Dec-2020 14:02:14
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -411,41 +411,5 @@ function drawpen_Callback(hObject, eventdata, handles)
 % hObject    handle to drawpen (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-a=handles.a;
-b=handles.b;
-
-message = sprintf('Left click and hold to begin drawing a freehand path.\nSimply lift the mouse button to finish.\nDRAW FAST!!!');
-uiwait(msgbox(message));
-% User draws curve on image here.
-hFH = imfreehand();
-% Get the xy coordinates of where they drew.
-xy = hFH.getPosition
-% get rid of imfreehand remnant.
-delete(hFH);
 
 
-% Overlay what they drew onto the image.
-hold on; % Keep image, and direction of y axis.
-xCoordinates = xy(:, 1);
-yCoordinates = xy(:, 2);
-% plot(xCoordinates, yCoordinates, 'ro', 'LineWidth', 2, 'MarkerSize', 10);
-
-% Ask user if they want to burn the line into the image.
-promptMessage = sprintf('Do you want to burn the line into the image?');
-titleBarCaption = 'Continue?';
-button = questdlg(promptMessage, titleBarCaption, 'Yes', 'No', 'Yes');
-if strcmpi(button, 'Yes')
-  cla;
-  hold off;
-  for k = 1 : length(xCoordinates)
-    row = int32(yCoordinates(k));
-    column = int32(xCoordinates(k));
-    b(row, column) = 255;
-  end
-  imshow(b, []);
-  
-  
-end
-
-handles.b=b;
-guidata(hObject,handles);
