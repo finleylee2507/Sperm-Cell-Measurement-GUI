@@ -56,17 +56,17 @@ while stack.empty()==false
     end 
     
     if (conn==1)
-        if(row+1>=1&row+1<=height&visited(row+1,col)==0&temp(row+1,col)==1)
+        if(row+1>=1&&row+1<=height&&visited(row+1,col)==0&&temp(row+1,col)==1)
             stack.push([row+1,col]);
         end
         
-        if(row-1>=1&row-1<=height&visited(row-1,col)==0&temp(row-1,col)==1)
+        if(row-1>=1&&row-1<=height&&visited(row-1,col)==0&&temp(row-1,col)==1)
             stack.push([row-1,col]);
         end
-        if(col+1>=1&col+1<=width&visited(row,col+1)==0&temp(row,col+1)==1)
+        if(col+1>=1&&col+1<=width&&visited(row,col+1)==0&&temp(row,col+1)==1)
             stack.push([row,col+1]);
         end
-        if(col-1>=1&col-1<=width&visited(row,col-1)==0&temp(row,col-1)==1)
+        if(col-1>=1&&col-1<=width&&visited(row,col-1)==0&&temp(row,col-1)==1)
             stack.push([row,col-1]);
         end
     end 

@@ -336,5 +336,12 @@ size(largebone)
 % plotCC2(thin_test);
 % 
 
-strcat("I love ","you")
+test=imread('test.jpg');
+imshow(test);
+
+% while true
+% [x, y] = ginput(1)
+% end 
+
+snake_read(test)
 

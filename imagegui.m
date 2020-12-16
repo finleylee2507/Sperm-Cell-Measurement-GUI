@@ -22,7 +22,7 @@ function varargout = imagegui(varargin)
 
 % Edit the above text to modify the response to help imagegui
 
-% Last Modified by GUIDE v2.5 08-Dec-2020 23:45:50
+% Last Modified by GUIDE v2.5 15-Dec-2020 18:17:53
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -125,8 +125,12 @@ function pushbutton1_Callback(hObject, eventdata, handles)
         a=rgb2gray(a);
         [rows,columns]=size(a);
         
-       a=imresize(a,0.15);
+       a=imresize(a,0.13);
       [newrows,newcolumns]=size(a);
+      
+      %display the text field 
+      set(handles.original, 'Visible', 'on');
+      set(handles.current, 'Visible', 'on');
        
        handles.a=a;%copy used to display the original image 
        handles.b=a;%copy used for temporary changes
@@ -143,10 +147,17 @@ function pushbutton1_Callback(hObject, eventdata, handles)
        
        %store other relevant information
        handles.erasermsgcount=0;
+       handles.filename=filename;
+       maxSliderValue = get(handles.thresholding, 'Max');
+       minSliderValue = get(handles.thresholding, 'Min');
+       theRange = maxSliderValue - minSliderValue;
+       steps = [1/(theRange), 10/theRange];
+       set(handles.thresholding, 'SliderStep', steps);
     end
 %clean up text field 
 %clean up text fields
-set(handles.finalLength,'String','');
+message=strcat("Filename:",filename);
+set(handles.finalLength,'String',message);
 % Update handles structure
 
 guidata(hObject, handles);
@@ -202,6 +213,7 @@ function brighten_image_Callback(hObject, eventdata, handles)
 temp=handles.b;
 % temp=imlocalbrighten(temp);
 temp=adapthisteq(temp);
+% temp=imadjust(temp);
 axes(handles.axes2);
 imshow(temp);
 handles.b=temp;
@@ -225,6 +237,8 @@ set(handles.thresholding,'value',0);
 set(handles.threshold_value,'String','0');
 
 set(handles.component_number,'String',num2str(1));
+
+
 guidata(hObject, handles);
 
 
@@ -320,12 +334,14 @@ set(handles.finalLength,'String',message1);
 drawnow;%display text immediately 
 cellbody=handles.preview; %retrieve the binary image of the cell body 
 cell_cc=buildCC2D(cellbody);%build the cell complex for thinning 
-thin_result=thin2D(cell_cc,20,0.8); %perform 2D thinning on the cell complex with the specified parameters. 
-cell_length=(size(thin_result{1},2)*(handles.rows/handles.newrows))/3.06; %NOTE: NEED TO COME BACK AND FIX ratio 
+thin_result=thin2D(cell_cc,4,0.9); %perform 2D thinning on the cell complex with the specified parameters. 
+cell_length=(size(thin_result{1},2)*(handles.rows/handles.newrows))/3.06; 
 disp(cell_length);
 final_length=num2str(cell_length);
-% plotCC2(thin_result);
-message2=strcat("The length of the sperm cell is: ",final_length, " mm");
+plotCC2(thin_result);
+% message2=strcat("Filename: ",handles.filename,"The length of the sperm cell is: ",final_length, " mm");
+message2="Filename: "+handles.filename+"\n"+"The length of the sperm cell is: "+final_length+" mm";
+message2=compose(message2);
 set(handles.finalLength,'String',message2);
 guidata(hObject,handles);
 
