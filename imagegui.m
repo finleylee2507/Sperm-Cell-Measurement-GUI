@@ -333,11 +333,11 @@ set(handles.finalLength,'String',message1);
 drawnow;%display text immediately 
 cellbody=handles.preview; %retrieve the binary image of the cell body 
 cell_cc=buildCC2D(cellbody);%build the cell complex for thinning 
-thin_result=thin2D(cell_cc,4,0.79); %perform 2D thinning on the cell complex with the specified parameters. 
+thin_result=thin2D(cell_cc,4,0.85); %perform 2D thinning on the cell complex with the specified parameters. 
 cell_length=(size(thin_result{1},2)*(handles.rows/handles.newrows))/3.06; 
 disp(cell_length);
 final_length=num2str(cell_length);
-plotCC2(thin_result);
+% plotCC2(thin_result);
 % message2=strcat("Filename: ",handles.filename,"The length of the sperm cell is: ",final_length, " mm");
 message2="Filename: "+handles.filename+"\n"+"The length of the sperm cell is: "+final_length+" mm";
 message2=compose(message2);
@@ -387,8 +387,14 @@ while true
         break
     end
     
+    promptMessage = sprintf('Do you want to burn the line into the image?');
+    titleBarCaption = 'Continue?';
+    button = questdlg(promptMessage, titleBarCaption, 'Yes', 'No', 'Yes');
+    if strcmpi(button, 'Yes')
+        temp(pos(1,2):pos(1,2)+pos(1,4),pos(1,1):pos(1,1)+pos(1,3))=0;
+    end
     
-    temp(pos(1,2):pos(1,2)+pos(1,4),pos(1,1):pos(1,1)+pos(1,3))=0;
+    
    
     imshow(temp);
     loop = inputdlg('Continue? (1/0) : '); % 1 to continue 0 to break loop
@@ -413,13 +419,18 @@ function drawpen_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 a=handles.a;
 b=handles.b;
+% figure;
+axes(handles.axes2);
 
-message = sprintf('Left click and hold to begin drawing a freehand path.\nSimply lift the mouse button to finish.\nDRAW FAST!!!');
+imshow(b);
+message = sprintf('Left click and hold to begin drawing a freehand path.\nSimply lift the mouse button to finish.\nDRAW SLOWLY!!!');
+
 uiwait(msgbox(message));
-% User draws curve on image here.
+while true
+    % User draws curve on image here.
 hFH = imfreehand();
 % Get the xy coordinates of where they drew.
-xy = hFH.getPosition
+xy = hFH.getPosition;
 % get rid of imfreehand remnant.
 delete(hFH);
 
@@ -436,7 +447,7 @@ titleBarCaption = 'Continue?';
 button = questdlg(promptMessage, titleBarCaption, 'Yes', 'No', 'Yes');
 if strcmpi(button, 'Yes')
   cla;
-  hold off;
+  
   for k = 1 : length(xCoordinates)
     row = int32(yCoordinates(k));
     column = int32(xCoordinates(k));
@@ -446,6 +457,22 @@ if strcmpi(button, 'Yes')
   
   
 end
+
+
+loop = inputdlg('Continue? (1/0) : '); % 1 to continue 0 to break loop
+    user_val = str2num(loop{1});
+   
+    if user_val ==0
+        break
+    else 
+        continue 
+    end 
+
+end
+
+
+
+
 
 handles.b=b;
 guidata(hObject,handles);
