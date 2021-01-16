@@ -33,7 +33,9 @@ The longest sperm ever recorded comes from the fruit fly Drosophila bifurca, whi
 
 9. At any time, you can always restart the process by clicking the "Reset" button.  
 
-Enjoy! 
+10. Have fun and enjoy! 
+
+
 
 
 
