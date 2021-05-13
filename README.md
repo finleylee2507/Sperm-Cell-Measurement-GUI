@@ -1,6 +1,4 @@
 # Measuring Length of Sperm Cell of Fruit Flies 
-CSE 554 Final Project<br />
-Course: Geometric Computing for Biomedicine <br />
 Author: Finley Li  <br />
 Instructor: Prof. Tao Ju <br />
 Institution: Washington University in St. Louis <br />
