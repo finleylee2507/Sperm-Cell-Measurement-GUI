@@ -337,7 +337,7 @@ thin_result=thin2D(cell_cc,4,0.85); %perform 2D thinning on the cell complex wit
 cell_length=(size(thin_result{1},2)*(handles.rows/handles.newrows))/3.06; 
 disp(cell_length);
 final_length=num2str(cell_length);
-% plotCC2(thin_result);
+plotCC2(thin_result);
 % message2=strcat("Filename: ",handles.filename,"The length of the sperm cell is: ",final_length, " mm");
 message2="Filename: "+handles.filename+"\n"+"The length of the sperm cell is: "+final_length+" mm";
 message2=compose(message2);
