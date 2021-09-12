@@ -1,3 +1,6 @@
+
+![image](https://github.com/finleylee2507/Sperm-Cell-Measurement-GUI/blob/main/image/GUI.png)
+
 # Measuring Length of Sperm Cell of Fruit Flies 
 Author: Finley Li  <br />
 Instructor: Prof. Tao Ju <br />
